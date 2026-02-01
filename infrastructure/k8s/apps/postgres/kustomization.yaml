@@ -1,0 +1,4 @@
+resources:
+  - todo-cluster.yaml
+  - n8n-cluster.yaml
+  - scheduled-backup.yaml

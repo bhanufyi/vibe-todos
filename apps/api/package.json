@@ -1,0 +1,31 @@
+{
+	"name": "@vibe-todos/api",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"lint": "biome lint ./src",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "tsx src/db/migrate.ts",
+		"db:push": "drizzle-kit push",
+		"db:studio": "drizzle-kit studio"
+	},
+	"dependencies": {
+		"@hono/node-server": "^1.15.1",
+		"@hono/zod-validator": "^0.7.6",
+		"@vibe-todos/shared": "workspace:*",
+		"drizzle-orm": "^0.44.2",
+		"hono": "^4.7.13",
+		"postgres": "^3.4.7",
+		"zod": "^3.25.9"
+	},
+	"devDependencies": {
+		"@types/node": "^22.15.8",
+		"drizzle-kit": "^0.31.4",
+		"tsx": "^4.20.3",
+		"typescript": "^5.7.2"
+	}
+}

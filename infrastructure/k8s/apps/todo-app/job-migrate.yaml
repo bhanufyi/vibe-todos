@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: todo-app-migrate
+  namespace: default
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app: todo-app-migrate
+    spec:
+      serviceAccountName: todo-app
+      restartPolicy: OnFailure
+      containers:
+        - name: migrate
+          image: us-west1-docker.pkg.dev/bhanufyi/todo-app/api:latest
+          command: ["node", "dist/db/migrate.js"]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: todo-db-app
+                  key: uri

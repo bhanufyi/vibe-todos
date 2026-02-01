@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app-web
+  namespace: default
+spec:
+  selector:
+    app: todo-app-web
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app-api
+  namespace: default
+spec:
+  selector:
+    app: todo-app-api
+  ports:
+    - name: http
+      port: 3001
+      targetPort: 3001
+  type: ClusterIP

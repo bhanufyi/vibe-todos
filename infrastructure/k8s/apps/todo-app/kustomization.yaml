@@ -1,0 +1,8 @@
+resources:
+  - serviceaccount.yaml
+  - deployment-web.yaml
+  - deployment-api.yaml
+  - job-migrate.yaml
+  - service.yaml
+  - hpa.yaml
+  - pdb.yaml

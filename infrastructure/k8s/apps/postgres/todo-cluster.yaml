@@ -1,0 +1,43 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: todo-db
+  namespace: default
+spec:
+  instances: 1
+
+  storage:
+    size: 1Gi
+    storageClass: standard-rwo
+
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+  serviceAccountTemplate:
+    metadata:
+      annotations:
+        iam.gke.io/gcp-service-account: todo-app@bhanufyi.iam.gserviceaccount.com
+
+  postgresql:
+    parameters:
+      shared_buffers: "64MB"
+      max_connections: "50"
+
+  backup:
+    barmanObjectStore:
+      destinationPath: "gs://bhanufyi-pg-backups-922801875648/todo-db"
+      googleCredentials:
+        gkeEnvironment: true
+    retentionPolicy: "7d"
+
+  affinity:
+    tolerations:
+      - key: "cloud.google.com/gke-spot"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"

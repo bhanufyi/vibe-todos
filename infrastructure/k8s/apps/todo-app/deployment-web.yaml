@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app-web
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-app-web
+  template:
+    metadata:
+      labels:
+        app: todo-app-web
+    spec:
+      serviceAccountName: todo-app
+      tolerations:
+        - key: "cloud.google.com/gke-spot"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      containers:
+        - name: web
+          image: us-west1-docker.pkg.dev/bhanufyi/todo-app/web:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: API_INTERNAL_URL
+              value: "http://todo-app-api:3001"
+            - name: NEXT_PUBLIC_API_URL
+              value: ""
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"

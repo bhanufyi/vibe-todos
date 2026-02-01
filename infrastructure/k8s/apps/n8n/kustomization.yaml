@@ -1,0 +1,6 @@
+resources:
+  - serviceaccount.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - pdb.yaml

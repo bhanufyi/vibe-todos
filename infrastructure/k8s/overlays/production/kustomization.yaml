@@ -1,0 +1,7 @@
+resources:
+  - ../../base
+  - ../../operators/cloudnative-pg
+  - ../../apps/postgres
+  - ../../apps/todo-app
+  - ../../apps/n8n
+  - ../../apps/cloudflared

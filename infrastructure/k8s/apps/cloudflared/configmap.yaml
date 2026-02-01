@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared-config
+  namespace: default
+data:
+  config.yaml: |
+    tunnel: ced30799-f683-4af8-af1a-a78f624afbc2
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    ingress:
+      - hostname: todos.bhanu.fyi
+        service: http://todo-app-web:3000
+      - hostname: n8n.bhanu.fyi
+        service: http://n8n:5678
+      - service: http_status:404
