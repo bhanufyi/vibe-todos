@@ -1,0 +1,46 @@
+tempo:
+  auth_enabled: false
+  server:
+    http_listen_port: 3200
+  distributor:
+    receivers:
+      otlp:
+        protocols:
+          grpc: {}
+          http: {}
+  storage:
+    trace:
+      backend: local
+      local:
+        path: /var/tempo/traces
+      wal:
+        path: /var/tempo/wal
+  compactor:
+    compaction:
+      block_retention: 168h
+
+replicas: 1
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+persistence:
+  enabled: true
+  size: 5Gi
+
+securityContext:
+  fsGroup: 0
+  runAsGroup: 0
+  runAsNonRoot: false
+  runAsUser: 0
+
+tolerations:
+  - key: "cloud.google.com/gke-spot"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"

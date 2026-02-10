@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: todo-app-web
   namespace: default
+  labels:
+    app: todo-app-web
 spec:
   selector:
     app: todo-app-web
@@ -17,6 +19,8 @@ kind: Service
 metadata:
   name: todo-app-api
   namespace: default
+  labels:
+    app: todo-app-api
 spec:
   selector:
     app: todo-app-api

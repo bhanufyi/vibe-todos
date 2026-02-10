@@ -25,6 +25,11 @@ resource "cloudflare_tunnel_config" "main" {
     }
 
     ingress_rule {
+      hostname = "grafana.${var.domain}"
+      service  = "http://prometheus-grafana.monitoring:3000"
+    }
+
+    ingress_rule {
       service = "http_status:404"
     }
   }

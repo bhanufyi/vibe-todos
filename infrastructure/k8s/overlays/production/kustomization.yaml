@@ -5,3 +5,4 @@ resources:
   - ../../apps/todo-app
   - ../../apps/n8n
   - ../../apps/cloudflared
+  - ../../monitoring

@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: cnpg
+  namespace: monitoring
+  labels:
+    release: prometheus
+spec:
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchExpressions:
+      - key: cnpg.io/cluster
+        operator: In
+        values:
+          - todo-db
+          - n8n-db
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s

@@ -6,13 +6,29 @@
 		"dev": "turbo dev",
 		"build": "turbo build",
 		"lint": "biome lint .",
+		"lint:ci": "biome ci .",
+		"typecheck": "turbo typecheck",
 		"format": "biome format --write .",
 		"check": "biome check --write .",
-		"clean": "turbo clean && rm -rf node_modules"
+		"clean": "turbo clean && rm -rf node_modules",
+		"prepare": "husky",
+		"commit": "cz",
+		"commitlint": "commitlint"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
+		"@commitlint/cli": "^19.8.0",
+		"@commitlint/config-conventional": "^19.8.0",
+		"commitizen": "^4.3.1",
+		"cz-conventional-changelog": "^3.3.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.4.3",
 		"turbo": "^2.3.3"
+	},
+	"config": {
+		"commitizen": {
+			"path": "cz-conventional-changelog"
+		}
 	},
 	"packageManager": "pnpm@9.15.0",
 	"engines": {

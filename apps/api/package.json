@@ -8,6 +8,7 @@
 		"build": "tsc",
 		"start": "node dist/index.js",
 		"lint": "biome lint ./src",
+		"typecheck": "tsc --noEmit",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "tsx src/db/migrate.ts",
 		"db:push": "drizzle-kit push",
@@ -19,6 +20,7 @@
 		"@vibe-todos/shared": "workspace:*",
 		"drizzle-orm": "^0.44.2",
 		"hono": "^4.7.13",
+		"prom-client": "^15.1.0",
 		"postgres": "^3.4.7",
 		"zod": "^3.25.9"
 	},

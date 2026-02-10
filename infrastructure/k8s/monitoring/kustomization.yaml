@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+
+resources:
+  - namespace.yaml
+  - servicemonitors.yaml
+  - podmonitors.yaml
+
+helmCharts:
+  - name: kube-prometheus-stack
+    repo: https://prometheus-community.github.io/helm-charts
+    version: "61.7.0"
+    releaseName: prometheus
+    namespace: monitoring
+    includeCRDs: true
+    valuesFile: prometheus-values.yaml
+  - name: loki
+    repo: https://grafana.github.io/helm-charts
+    version: "6.7.3"
+    releaseName: loki
+    namespace: monitoring
+    valuesFile: loki-values.yaml
+  - name: promtail
+    repo: https://grafana.github.io/helm-charts
+    version: "6.16.4"
+    releaseName: promtail
+    namespace: monitoring
+    valuesFile: promtail-values.yaml
+  - name: tempo
+    repo: https://grafana.github.io/helm-charts
+    version: "1.10.1"
+    releaseName: tempo
+    namespace: monitoring
+    valuesFile: tempo-values.yaml

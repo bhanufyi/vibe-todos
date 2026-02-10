@@ -12,4 +12,6 @@ data:
         service: http://todo-app-web:3000
       - hostname: n8n.bhanu.fyi
         service: http://n8n:5678
+      - hostname: grafana.bhanu.fyi
+        service: http://prometheus-grafana.monitoring:3000
       - service: http_status:404

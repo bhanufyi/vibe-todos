@@ -43,5 +43,8 @@ gha-creds-*.json
 .terraform
 .terraform.lock.hcl
 
+# Kustomize/Helm
+infrastructure/k8s/monitoring/charts/
+
 # Docker
 *.pem

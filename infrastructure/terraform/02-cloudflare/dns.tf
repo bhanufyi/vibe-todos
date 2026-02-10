@@ -13,3 +13,11 @@ resource "cloudflare_record" "n8n" {
   content = "${cloudflare_tunnel.main.id}.cfargotunnel.com"
   proxied = true
 }
+
+resource "cloudflare_record" "grafana" {
+  zone_id = var.cloudflare_zone_id
+  name    = "grafana"
+  type    = "CNAME"
+  content = "${cloudflare_tunnel.main.id}.cfargotunnel.com"
+  proxied = true
+}

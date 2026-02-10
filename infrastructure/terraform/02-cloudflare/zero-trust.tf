@@ -13,3 +13,11 @@ resource "cloudflare_zero_trust_access_application" "n8n" {
   type             = "self_hosted"
   session_duration = "24h"
 }
+
+resource "cloudflare_zero_trust_access_application" "grafana" {
+  account_id       = var.cloudflare_account_id
+  name             = "grafana.${var.domain}"
+  domain           = "grafana.${var.domain}"
+  type             = "self_hosted"
+  session_duration = "24h"
+}

@@ -13,3 +13,8 @@ output "tunnel_secret" {
   value       = random_password.tunnel_secret.result
   sensitive   = true
 }
+
+output "google_access_redirect_url" {
+  description = "Google OAuth redirect URL for Cloudflare Access"
+  value       = cloudflare_zero_trust_access_identity_provider.google.config[0].redirect_url
+}

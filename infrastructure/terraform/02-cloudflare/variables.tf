@@ -25,3 +25,15 @@ variable "allowed_email" {
   type        = string
   default     = "bhanuprasadcherukuvada2000@gmail.com"
 }
+
+variable "google_oauth_client_id" {
+  description = "Google OAuth client ID for Cloudflare Zero Trust"
+  type        = string
+  sensitive   = true
+}
+
+variable "google_oauth_client_secret" {
+  description = "Google OAuth client secret for Cloudflare Zero Trust"
+  type        = string
+  sensitive   = true
+}

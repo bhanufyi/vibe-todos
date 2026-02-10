@@ -6,7 +6,8 @@
 		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
-		"lint": "biome lint ./src"
+		"lint": "biome lint ./src",
+		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@hello-pangea/dnd": "^18.0.1",
@@ -19,6 +20,7 @@
 		"clsx": "^2.1.1",
 		"lucide-react": "^0.563.0",
 		"next": "16.1.6",
+		"prom-client": "^15.1.0",
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
 		"tailwind-merge": "^3.4.0"
