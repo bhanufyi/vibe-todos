@@ -67,9 +67,35 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+  e2e:
+    name: Typing E2E
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run typing app E2E tests
+        run: pnpm --filter @vibe-todos/typing test:e2e
+
   build:
     name: Build and Push Images
-    needs: checks
+    needs: [checks, e2e]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -90,6 +116,13 @@ jobs:
           docker build --platform linux/amd64 \
             -t web:pr \
             -f apps/web/Dockerfile .
+
+      - name: Build Typing (PR validation)
+        if: github.event_name == 'pull_request'
+        run: |
+          docker build --platform linux/amd64 \
+            -t typing:pr \
+            -f apps/typing/Dockerfile .
 
       - name: Authenticate to Google Cloud
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -124,11 +157,21 @@ jobs:
             -f apps/web/Dockerfile .
           docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/web:${{ github.sha }}
 
+      - name: Build and Push Typing (main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          docker build --platform linux/amd64 \
+            -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/typing:${{ github.sha }} \
+            -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/typing:latest \
+            -f apps/typing/Dockerfile .
+          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/typing:${{ github.sha }}
+
       - name: Push latest tags
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/api:latest
           docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/web:latest
+          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/typing:latest
 
   terraform:
     name: Terraform Apply
@@ -201,8 +244,10 @@ jobs:
         run: |
           kubectl set image deployment/todo-app-api api=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/api:${{ github.sha }} -n default
           kubectl set image deployment/todo-app-web web=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/web:${{ github.sha }} -n default
+          kubectl set image deployment/typing-app web=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/typing:${{ github.sha }} -n default
 
       - name: Wait for rollout
         run: |
           kubectl rollout status deployment/todo-app-api -n default --timeout=180s
           kubectl rollout status deployment/todo-app-web -n default --timeout=180s
+          kubectl rollout status deployment/typing-app -n default --timeout=180s

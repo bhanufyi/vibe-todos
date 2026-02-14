@@ -3,6 +3,7 @@ resources:
   - ../../operators/cloudnative-pg
   - ../../apps/postgres
   - ../../apps/todo-app
+  - ../../apps/typing
   - ../../apps/n8n
   - ../../apps/cloudflared
   - ../../monitoring

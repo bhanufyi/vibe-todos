@@ -20,6 +20,11 @@ resource "cloudflare_tunnel_config" "main" {
     }
 
     ingress_rule {
+      hostname = "typing.${var.domain}"
+      service  = "http://typing-app:3000"
+    }
+
+    ingress_rule {
       hostname = "n8n.${var.domain}"
       service  = "http://n8n:5678"
     }

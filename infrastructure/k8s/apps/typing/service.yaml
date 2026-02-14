@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: typing-app
+  namespace: default
+  labels:
+    app: typing-app
+spec:
+  selector:
+    app: typing-app
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP

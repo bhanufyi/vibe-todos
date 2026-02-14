@@ -12,6 +12,9 @@
 		"lint": {
 			"dependsOn": ["^lint"]
 		},
+		"test:e2e": {
+			"cache": false
+		},
 		"typecheck": {
 			"dependsOn": ["^typecheck"]
 		},

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: typing-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: typing-app
+  template:
+    metadata:
+      labels:
+        app: typing-app
+    spec:
+      serviceAccountName: typing-app
+      tolerations:
+        - key: "cloud.google.com/gke-spot"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      containers:
+        - name: web
+          image: us-west1-docker.pkg.dev/bhanufyi/todo-app/typing:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"

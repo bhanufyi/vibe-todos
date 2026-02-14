@@ -10,6 +10,8 @@ data:
     ingress:
       - hostname: todos.bhanu.fyi
         service: http://todo-app-web:3000
+      - hostname: typing.bhanu.fyi
+        service: http://typing-app:3000
       - hostname: n8n.bhanu.fyi
         service: http://n8n:5678
       - hostname: grafana.bhanu.fyi
