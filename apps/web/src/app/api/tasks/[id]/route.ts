@@ -4,10 +4,7 @@ export const runtime = 'nodejs';
 
 const API_INTERNAL_URL = process.env.API_INTERNAL_URL || 'http://localhost:3001';
 
-export async function PATCH(
-	request: NextRequest,
-	{ params }: { params: Promise<{ id: string }> },
-) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params;
 	const body = await request.json();
 	const response = await fetch(`${API_INTERNAL_URL}/api/tasks/${id}`, {
@@ -22,7 +19,7 @@ export async function PATCH(
 
 export async function DELETE(
 	_request: NextRequest,
-	{ params }: { params: Promise<{ id: string }> },
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	const { id } = await params;
 	const response = await fetch(`${API_INTERNAL_URL}/api/tasks/${id}`, {

@@ -113,10 +113,10 @@ tasks.patch('/:id/move', zValidator('json', moveTaskSchema), async (c) => {
 				.where(
 					and(
 						eq(schema.tasks.status, newStatus),
-					gt(schema.tasks.order, oldOrder),
-					lte(schema.tasks.order, newOrder)
-				)
-			);
+						gt(schema.tasks.order, oldOrder),
+						lte(schema.tasks.order, newOrder)
+					)
+				);
 		} else if (newOrder < oldOrder) {
 			// Moving up: shift tasks down
 			await db
