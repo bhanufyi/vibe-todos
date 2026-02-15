@@ -61,6 +61,7 @@ jobs:
           if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
             pnpm commitlint --from HEAD~0 --to HEAD --verbose
           else
+            git fetch --no-tags --prune --depth=2 origin ${{ github.event.before }}
             pnpm commitlint --from ${{ github.event.before }} --to ${{ github.sha }} --verbose
           fi
 
