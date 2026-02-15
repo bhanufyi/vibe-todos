@@ -89,7 +89,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: pnpm --filter @vibe-todos/typing exec playwright install --with-deps chromium
 
       - name: Run typing app E2E tests
         run: pnpm --filter @vibe-todos/typing test:e2e
