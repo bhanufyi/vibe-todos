@@ -52,3 +52,10 @@ resource "google_project_iam_member" "github_actions_artifact" {
   role    = "roles/artifactregistry.writer"
   member  = "serviceAccount:${google_service_account.github_actions.email}"
 }
+
+# Allow GitHub Actions SA to read/write Terraform state objects
+resource "google_storage_bucket_iam_member" "github_actions_tf_state" {
+  bucket = "${var.project_id}-terraform-state"
+  role   = "roles/storage.objectAdmin"
+  member = "serviceAccount:${google_service_account.github_actions.email}"
+}
