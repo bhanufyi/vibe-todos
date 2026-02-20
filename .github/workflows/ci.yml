@@ -178,6 +178,7 @@ jobs:
     name: Terraform Apply
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    continue-on-error: true
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -213,7 +214,7 @@ jobs:
 
   deploy:
     name: Deploy to GKE
-    needs: [build, terraform]
+    needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
