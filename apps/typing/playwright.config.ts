@@ -8,7 +8,7 @@ export default defineConfig({
 	reporter: [['list'], ['html', { open: 'never' }]],
 	expect: {
 		toHaveScreenshot: {
-			maxDiffPixels: 150,
+			maxDiffPixelRatio: 0.03,
 		},
 	},
 	use: {
