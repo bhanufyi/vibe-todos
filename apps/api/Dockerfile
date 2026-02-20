@@ -43,7 +43,7 @@ COPY apps/api/package.json ./apps/api/
 COPY packages/shared/package.json ./packages/shared/
 
 # Install production dependencies for the API only
-RUN pnpm install --prod --frozen-lockfile --filter @vibe-todos/api...
+RUN pnpm install --prod --frozen-lockfile --filter @vibe-todos/api... --ignore-scripts
 
 # Copy built files
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
