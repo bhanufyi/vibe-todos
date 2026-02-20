@@ -242,7 +242,9 @@ jobs:
 
       - name: Apply Kubernetes manifests
         run: |
-          kubectl kustomize --enable-helm infrastructure/k8s/overlays/production | kubectl apply -f -
+          kubectl apply -k infrastructure/k8s/apps/cloudflared
+          kubectl apply -k infrastructure/k8s/apps/todo-app
+          kubectl apply -k infrastructure/k8s/apps/typing
 
       - name: Update image tags
         run: |
