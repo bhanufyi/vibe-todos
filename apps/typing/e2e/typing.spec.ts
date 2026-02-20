@@ -19,10 +19,11 @@ test('tab is rejected when spaces are expected', async ({ page }) => {
 	await area.click();
 	await page.keyboard.type('function add(a: number, b: number): number {');
 	await page.keyboard.press('Enter');
+	const progressBeforeTab = await page.getByTestId('progress-value').textContent();
 	await page.keyboard.press('Tab');
 
 	await expect(page.getByTestId('stats-errors')).toHaveText('1');
-	await expect(page.getByTestId('progress-value')).toHaveText('0%');
+	await expect(page.getByTestId('progress-value')).toHaveText(progressBeforeTab ?? '0%');
 });
 
 test('wrong input counts errors in stop-on-error mode', async ({ page }) => {

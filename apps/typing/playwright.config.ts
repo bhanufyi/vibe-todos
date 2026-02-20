@@ -3,6 +3,7 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
 	testDir: './e2e',
 	outputDir: './test-results',
+	snapshotPathTemplate: '{testDir}/{testFilePath}-snapshots/{arg}{ext}',
 	timeout: 30_000,
 	reporter: [['list'], ['html', { open: 'never' }]],
 	expect: {
